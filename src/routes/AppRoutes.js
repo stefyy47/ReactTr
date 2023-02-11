@@ -8,7 +8,7 @@ import { NotFound } from '@totalsoft_oss/rocket-ui.core'
 import Forbidden from '../components/feedback/Forbidden'
 import Dashboard from 'features/dashboard/Dashboard'
 import { MyProfile } from 'features/myProfile/myProfile'
-import { BuildingListContainer } from 'features/buildings/BuildingsListContainer'
+import { BuildingListContainer } from 'features/buildings/BuildingListContainer'
 
 export default function AppRoutes() {
   return (
