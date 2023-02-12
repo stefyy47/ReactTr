@@ -4,7 +4,7 @@ import { IconCard } from '@bit/totalsoft_oss.react-mui.kit.core'
 import SearchIcon from '@mui/icons-material/Search'
 import SendIcon from '@mui/icons-material/Send'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { emptyString } from 'utils/constants'
+import { emptyObject } from 'utils/constants'
 import { Button, Grid } from '@mui/material'
 import { Autocomplete } from '@totalsoft_oss/rocket-ui.core'
 
@@ -13,7 +13,7 @@ export const BuildingFilter = ({ filter, onApplyFilter, onResetFilter, options, 
   const [localBuildingType, setLocalBuildingType] = useState(buildingType)
   const optionsForBuildingTypes = [{"id": '0', "name": "All"}, {"id": '1', "name": "Resources"}, {"id": '2', "name": "Buildings"}]
   const handleResetFilter = useCallback(() => {
-    setLocalFilter(emptyString)
+    setLocalFilter(emptyObject)
     onResetFilter()
   }, [onResetFilter])
 

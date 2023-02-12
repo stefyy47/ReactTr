@@ -5,14 +5,14 @@ import { emptyString } from 'utils/constants'
 import { useCallback } from 'react'
 import { Button, Grid, TextField } from '@mui/material'
 
-export const Initializer = ({ getBuildings }) => {
-  const [worldName, setWorldName] = useState(emptyString)
+export const Initializer = ({ getBuildings, setCurrentPlayer, setWorldName }) => {
+  const [worldNameLocal, setWorldNameLocal] = useState(emptyString)
   const [playerId, setPlayerId] = useState(emptyString)
   const handleWorldNameChanged = useCallback(
     e => {
-      setWorldName(e.target.value)
+      setWorldNameLocal(e.target.value)
     },
-    [setWorldName]
+    [setWorldNameLocal]
   )
   const handlePlayerIdChanged = useCallback(
     e => {
@@ -21,13 +21,15 @@ export const Initializer = ({ getBuildings }) => {
     [setPlayerId]
   )
   const handleGetBuildings = useCallback(() => {
-    if (!worldName || !playerId) return
-    getBuildings(playerId, worldName)
-  }, [playerId, worldName, getBuildings])
+    if (!worldNameLocal || !playerId) return
+    setWorldName(worldNameLocal)
+    setCurrentPlayer(playerId)
+    getBuildings(playerId, worldNameLocal)
+  }, [worldNameLocal, playerId, setWorldName, setCurrentPlayer, getBuildings])
   return (
     <Grid container justifyContent='center' alignItems='center' alignContent='center' direction='column' spacing={3}>
       <Grid item xs={2} md={2} lg={2}>
-        <TextField label={'World Name'} fullWidth value={worldName} onChange={handleWorldNameChanged}></TextField>
+        <TextField label={'World Name'} fullWidth value={worldNameLocal} onChange={handleWorldNameChanged}></TextField>
       </Grid>
       <Grid item xs={2} md={2} lg={2}>
         <TextField label={'Player id'} fullWidth value={playerId} onChange={handlePlayerIdChanged}></TextField>
@@ -42,5 +44,7 @@ export const Initializer = ({ getBuildings }) => {
 }
 
 Initializer.propTypes = {
-  getBuildings: PropTypes.func
+  getBuildings: PropTypes.func,
+  setCurrentPlayer: PropTypes.func,
+  setWorldName: PropTypes.func
 }

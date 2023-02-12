@@ -41,8 +41,8 @@ export const buildingNames = {
 }
 
 export const buildingTypes = {
-    '0': 'All',
-    '1': 'Resources',
-    '2': 'Buildings'
+    'All': '0',
+    'Resources': '1',
+    'Buildings': '2'
 }
 

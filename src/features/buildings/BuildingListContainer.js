@@ -2,8 +2,10 @@ import { defaultTo } from 'ramda'
 import React from 'react'
 import { useState } from 'react'
 import { useCallback } from 'react'
-import { buildingTypes, emptyArray, emptyObject } from 'utils/constants'
+import { buildingTypes, emptyArray, emptyObject, emptyString } from 'utils/constants'
+import { deleteQueueCall } from './apiCalls/deleteBuildQueue'
 import { getBuildingsCall } from './apiCalls/getBuildings'
+import { insertBuildingCall } from './apiCalls/insertBuild'
 import { BuildingFilter } from './BuildingFilter'
 import { BuildingList } from './BuildingList'
 import { Initializer } from './Initializer'
@@ -11,8 +13,18 @@ import { Initializer } from './Initializer'
 export const BuildingListContainer = () => {
   const [buildings, setBuildings] = useState(emptyArray)
   const [currentVillage, setCurrentVillage] = useState(emptyObject)
-  const [buildingType, setBuildingType] = useState(buildingTypes[0])
-  console.log(buildingType)
+  const [buildingType, setBuildingType] = useState(buildingTypes.All)
+  const [currentPlayer, setCurrentPlayer] = useState(emptyString)
+  const [worldName, setWorldName] = useState(emptyString)
+
+  const handleRemoveBuildQueue = useCallback(async () => {
+    await deleteQueueCall(currentPlayer, worldName, currentVillage?.villageId)
+  }, [currentPlayer, currentVillage?.villageId, worldName])
+
+  const handleAddBuild = useCallback(async (build, desiredLevel) => {
+    await insertBuildingCall(currentPlayer, worldName, currentVillage?.villageId, build?.locationId, build?.buildingType, desiredLevel)
+  }, [currentPlayer, currentVillage, worldName])
+
   const getBuildings = useCallback(async (playerId, worldName) => {
     if (!playerId || !worldName) return
     setBuildings(await getBuildingsCall(playerId, worldName))
@@ -24,14 +36,26 @@ export const BuildingListContainer = () => {
   }, [])
 
   const handleResetFilter = useCallback(() => {
-    setBuildingType(buildingTypes[0])
+    setBuildingType(buildingTypes.All)
     setCurrentVillage(emptyObject)
   }, [])
-  if (buildings.length == 0) return <Initializer getBuildings={getBuildings}></Initializer>
+  if (buildings.length == 0 || currentPlayer == emptyString || worldName == emptyString)
+    return <Initializer setCurrentPlayer={setCurrentPlayer} setWorldName={setWorldName} getBuildings={getBuildings}></Initializer>
   return (
     <>
-    <BuildingFilter onApplyFilter={handleApplyFilter} onResetFilter={handleResetFilter} filter={currentVillage} buildingType={buildingType} options={buildings}></BuildingFilter>
-    <BuildingList buildingType={buildingType} buildingList={currentVillage?.BuildingsInfo?.cache |> defaultTo(emptyArray)}></BuildingList>
+      <BuildingFilter
+        onApplyFilter={handleApplyFilter}
+        onResetFilter={handleResetFilter}
+        filter={currentVillage}
+        buildingType={buildingType}
+        options={buildings}
+      ></BuildingFilter>
+      <BuildingList
+        handleAddBuild={handleAddBuild}
+        buildingType={buildingType}
+        buildingList={currentVillage?.BuildingsInfo?.cache |> defaultTo(emptyArray)}
+        handleRemoveQueue={handleRemoveBuildQueue}
+      ></BuildingList>
     </>
   )
 }

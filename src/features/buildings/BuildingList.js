@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
-import { IconCard } from '@bit/totalsoft_oss.react-mui.kit.core'
+import { CardTitle, DeleteButton, IconCard } from '@bit/totalsoft_oss.react-mui.kit.core'
 import { Table, Thead, Tbody, Tr, Th } from 'react-super-responsive-table'
 import PropTypes from 'prop-types'
 import { Assessment } from '@material-ui/icons'
@@ -10,13 +10,20 @@ import { BuildingListItem } from './BuildingListItem'
 
 const useStyles = makeStyles(tableStyle(getTheme()))
 
-export const BuildingList = ({ buildingList, buildingType }) => {
+export const BuildingList = ({ buildingList, buildingType, handleAddBuild, handleRemoveQueue }) => {
   const { table, tableHeader, enableScrollX } = useStyles()
   return (
     <IconCard
       icon={Assessment}
       iconColor='themeWithGradient'
-      title='Buildings'
+      title={
+        <CardTitle
+          title={"Buildings"}
+          actions={[
+            <DeleteButton key='DeleteBuilding' title={"Delete queue"} fontSize='medium' color='themeWithGradient' onClick={handleRemoveQueue} />
+          ]}
+        />
+      }
       content={
         <>
           <Grid className={enableScrollX}>
@@ -31,7 +38,7 @@ export const BuildingList = ({ buildingList, buildingType }) => {
               </Thead>
               <Tbody>
                 {buildingList?.map((building, i) => (
-                  <BuildingListItem key={i} building={building?.data} buildingType={buildingType}/>
+                  <BuildingListItem handleAddBuild={handleAddBuild} key={i} building={building?.data} buildingType={buildingType}/>
                 ))}
               </Tbody>
             </Table>
@@ -44,5 +51,7 @@ export const BuildingList = ({ buildingList, buildingType }) => {
 
 BuildingList.propTypes = {
   buildingList: PropTypes.array,
-  buildingType: PropTypes.string
+  buildingType: PropTypes.string,
+  handleAddBuild: PropTypes.func,
+  handleRemoveQueue: PropTypes.func
 }

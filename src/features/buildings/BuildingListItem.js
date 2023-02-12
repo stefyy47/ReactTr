@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Tr, Td } from 'react-super-responsive-table'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core'
 import getTheme from 'utils/theme'
 import buildingStyle from './styles/styles'
-import { buildingNames, emptyFunction } from 'utils/constants'
+import { buildingNames, buildingTypes } from 'utils/constants'
 import { isNil } from 'ramda'
 import { Autocomplete, IconButton } from '@totalsoft_oss/rocket-ui.core'
 import { useState } from 'react'
@@ -12,17 +12,22 @@ import { Add } from '@mui/icons-material'
 
 const useStyles = makeStyles(buildingStyle(getTheme()))
 
-export const BuildingListItem = ({ building, buildingType }) => {
+export const BuildingListItem = ({ building, buildingType, handleAddBuild }) => {
   const { tableContent } = useStyles()
   const [desiredLevel, setDesiredLevel] = useState(0)
-  if (buildingType == '1') {
+  const onAddBuild = useCallback(() => {
+    if(desiredLevel == 0) return
+    handleAddBuild(building, desiredLevel)
+  }, [building, desiredLevel, handleAddBuild])
+  if (buildingType == buildingTypes.Resources) {
     if (building?.buildingType != '1' && building?.buildingType != '2' && building?.buildingType != '3' && building?.buildingType != '4')
       return null
   }
-  if (buildingType == '2')
+  if (buildingType == buildingTypes.Buildings)
     if (building?.buildingType == '1' || building?.buildingType == '2' || building?.buildingType == '3' || building?.buildingType == '4')
       return null
   if (isNil(buildingNames[building?.buildingType]) || building?.lvl == '0') return null
+
   var levelOptions = []
   const lowEnd = parseInt(building?.lvl) + 1
   const highEnd = parseInt(building?.lvlMax)
@@ -48,7 +53,7 @@ export const BuildingListItem = ({ building, buildingType }) => {
           ></Autocomplete>
         </Td>
         <Td>
-          <IconButton color={'successNoBackground'} size={'small'} onClick={emptyFunction} fontSize={'small'}>
+          <IconButton color={'successNoBackground'} size={'small'} onClick={onAddBuild} fontSize={'small'}>
             <Add size={'small'} />
           </IconButton>
         </Td>
@@ -59,5 +64,6 @@ export const BuildingListItem = ({ building, buildingType }) => {
 
 BuildingListItem.propTypes = {
   building: PropTypes.object,
-  buildingType: PropTypes.string
+  buildingType: PropTypes.string,
+  handleAddBuild: PropTypes.func
 }
