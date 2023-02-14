@@ -8,18 +8,16 @@ import { emptyObject } from 'utils/constants'
 import { Button, Grid } from '@mui/material'
 import { Autocomplete } from '@totalsoft_oss/rocket-ui.core'
 
-export const BuildingFilter = ({ filter, onApplyFilter, onResetFilter, options, buildingType }) => {
+export const RecruitFilter = ({ filter, onApplyFilter, onResetFilter, options }) => {
   const [localFilter, setLocalFilter] = useState(filter)
-  const [localBuildingType, setLocalBuildingType] = useState(buildingType)
-  const optionsForBuildingTypes = [{"id": '0', "name": "All"}, {"id": '1', "name": "Resources"}, {"id": '2', "name": "Buildings"}]
   const handleResetFilter = useCallback(() => {
     setLocalFilter(emptyObject)
     onResetFilter()
   }, [onResetFilter])
 
   const handleApplyFilter = useCallback(() => {
-    onApplyFilter(options?.find(o => o._id == localFilter?._id), localBuildingType)
-  }, [localBuildingType, localFilter?._id, onApplyFilter, options])
+    onApplyFilter(localFilter)
+  }, [localFilter, onApplyFilter])
 
   const handleEnterPressed = useCallback(
     event => {
@@ -49,18 +47,6 @@ export const BuildingFilter = ({ filter, onApplyFilter, onResetFilter, options, 
                 value={localFilter}
               ></Autocomplete>
             </Grid>
-            <Grid item xs={12} md={12} lg={12}>
-              <Autocomplete
-                label={'Building Types'}
-                fullWidth
-                required
-                simpleValue
-                options={optionsForBuildingTypes}
-                labelKey={'name'}
-                onChange={setLocalBuildingType}
-                value={localBuildingType}
-              ></Autocomplete>
-            </Grid>
           </Grid>
         }
       ></IconCard>
@@ -80,7 +66,7 @@ export const BuildingFilter = ({ filter, onApplyFilter, onResetFilter, options, 
   )
 }
 
-BuildingFilter.propTypes = {
+RecruitFilter.propTypes = {
   onResetFilter: PropTypes.func,
   onApplyFilter: PropTypes.func,
   filter: PropTypes.object,

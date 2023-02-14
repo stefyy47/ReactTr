@@ -1,5 +1,7 @@
+import useInterval from 'hooks/useInterval'
+import { usePlayerInfos } from 'hooks/usePlayerInfos'
 import { defaultTo } from 'ramda'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useCallback } from 'react'
 import { buildingTypes, emptyArray, emptyObject, emptyString } from 'utils/constants'
@@ -11,19 +13,23 @@ import { BuildingList } from './BuildingList'
 import { Initializer } from './Initializer'
 
 export const BuildingListContainer = () => {
+  const { playerInfo } = usePlayerInfos()
   const [buildings, setBuildings] = useState(emptyArray)
   const [currentVillage, setCurrentVillage] = useState(emptyObject)
   const [buildingType, setBuildingType] = useState(buildingTypes.All)
-  const [currentPlayer, setCurrentPlayer] = useState(emptyString)
-  const [worldName, setWorldName] = useState(emptyString)
+  const [currentPlayer] = useState(playerInfo?.playerId)
+  const [worldName] = useState(playerInfo?.worldName)
 
   const handleRemoveBuildQueue = useCallback(async () => {
-    await deleteQueueCall(currentPlayer, worldName, currentVillage?.villageId)
+    await deleteQueueCall(currentPlayer, worldName, currentVillage?.villageId, "building")
   }, [currentPlayer, currentVillage?.villageId, worldName])
 
-  const handleAddBuild = useCallback(async (build, desiredLevel) => {
-    await insertBuildingCall(currentPlayer, worldName, currentVillage?.villageId, build?.locationId, build?.buildingType, desiredLevel)
-  }, [currentPlayer, currentVillage, worldName])
+  const handleAddBuild = useCallback(
+    async (build, desiredLevel) => {
+      await insertBuildingCall(currentPlayer, worldName, currentVillage?.villageId, build?.locationId, build?.buildingType, desiredLevel)
+    },
+    [currentPlayer, currentVillage, worldName]
+  )
 
   const getBuildings = useCallback(async (playerId, worldName) => {
     if (!playerId || !worldName) return
@@ -39,8 +45,24 @@ export const BuildingListContainer = () => {
     setBuildingType(buildingTypes.All)
     setCurrentVillage(emptyObject)
   }, [])
-  if (buildings.length == 0 || currentPlayer == emptyString || worldName == emptyString)
-    return <Initializer setCurrentPlayer={setCurrentPlayer} setWorldName={setWorldName} getBuildings={getBuildings}></Initializer>
+
+  useInterval(
+    async () => {
+      setBuildings(await getBuildingsCall(currentPlayer, worldName))
+    },
+    currentPlayer != emptyString && worldName != emptyString && buildings?.length > 0 ? 10000 : null
+  )
+  useEffect(() => {
+    if (currentPlayer == emptyString || worldName == emptyString) return
+    async function fetchData() {
+      setBuildings(await getBuildingsCall(currentPlayer, worldName))
+
+    }
+    fetchData()
+  }, [currentPlayer, worldName])
+
+  if (buildings?.length == 0 || currentPlayer == emptyString || worldName == emptyString)
+    return <Initializer getBuildings={getBuildings}></Initializer>
   return (
     <>
       <BuildingFilter
@@ -53,7 +75,7 @@ export const BuildingListContainer = () => {
       <BuildingList
         handleAddBuild={handleAddBuild}
         buildingType={buildingType}
-        buildingList={currentVillage?.BuildingsInfo?.cache |> defaultTo(emptyArray)}
+        buildingList={buildings?.find(b => b._id == currentVillage?._id)?.BuildingsInfo?.cache |> defaultTo(emptyArray)}
         handleRemoveQueue={handleRemoveBuildQueue}
       ></BuildingList>
     </>

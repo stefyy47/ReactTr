@@ -9,6 +9,7 @@ const menuItems = [
   // { icon: <Dashboard />, text: 'NavBar.Dashboard', path: '/dashboard', name: 'Dashboard', roles: [], rights: [] },
   // { icon: <AccountBox />, text: 'NavBar.Voting', path: '/voting', name: 'Voting', roles: [], rights: [] },
   { icon: <Groups />, text: 'Buildings', path: '/buildings', name: 'Buildings', roles: [], rights: [] },
+  { icon: <Groups />, text: 'Recruit', path: '/recruit', name: 'Recruit', roles: [], rights: [] },
   {
     icon: <Settings />,
     text: 'NavBar.Settings',

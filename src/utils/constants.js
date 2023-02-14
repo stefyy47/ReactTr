@@ -46,3 +46,8 @@ export const buildingTypes = {
     'Buildings': '2'
 }
 
+export const tribes = {
+    "Roman": '1',
+    "Teutons": '2',
+    "Gauls": '3'
+}

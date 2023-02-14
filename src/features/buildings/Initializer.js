@@ -4,9 +4,12 @@ import { useState } from 'react'
 import { emptyString } from 'utils/constants'
 import { useCallback } from 'react'
 import { Button, Grid, TextField } from '@mui/material'
+import { usePlayerInfos } from 'hooks/usePlayerInfos'
 
-export const Initializer = ({ getBuildings, setCurrentPlayer, setWorldName }) => {
+export const Initializer = ({ getBuildings }) => {
   const [worldNameLocal, setWorldNameLocal] = useState(emptyString)
+  const { setPlayerInfo } = usePlayerInfos()
+
   const [playerId, setPlayerId] = useState(emptyString)
   const handleWorldNameChanged = useCallback(
     e => {
@@ -22,10 +25,9 @@ export const Initializer = ({ getBuildings, setCurrentPlayer, setWorldName }) =>
   )
   const handleGetBuildings = useCallback(() => {
     if (!worldNameLocal || !playerId) return
-    setWorldName(worldNameLocal)
-    setCurrentPlayer(playerId)
+    setPlayerInfo(playerId, worldNameLocal)
     getBuildings(playerId, worldNameLocal)
-  }, [worldNameLocal, playerId, setWorldName, setCurrentPlayer, getBuildings])
+  }, [worldNameLocal, playerId, setPlayerInfo, getBuildings])
   return (
     <Grid container justifyContent='center' alignItems='center' alignContent='center' direction='column' spacing={3}>
       <Grid item xs={2} md={2} lg={2}>
@@ -44,7 +46,5 @@ export const Initializer = ({ getBuildings, setCurrentPlayer, setWorldName }) =>
 }
 
 Initializer.propTypes = {
-  getBuildings: PropTypes.func,
-  setCurrentPlayer: PropTypes.func,
-  setWorldName: PropTypes.func
+  getBuildings: PropTypes.func
 }

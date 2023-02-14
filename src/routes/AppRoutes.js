@@ -9,11 +9,13 @@ import Forbidden from '../components/feedback/Forbidden'
 import Dashboard from 'features/dashboard/Dashboard'
 import { MyProfile } from 'features/myProfile/myProfile'
 import { BuildingListContainer } from 'features/buildings/BuildingListContainer'
+import { RecruitListContainer } from 'features/recruiting/RecruitListContainer'
 
 export default function AppRoutes() {
   return (
     <Switch>
       <CustomRoute isPrivate={false} exact path='/buildings' component={BuildingListContainer} />
+      <CustomRoute isPrivate={false} exact path='/recruit' component={RecruitListContainer} />
       <CustomRoute isPrivate={false} exact path='/dashboard' component={Dashboard} />
       {/* <Redirect exact from='/' to='/login' /> */}
       <CustomRoute isPrivate={false} exact path='/forbidden' component={Forbidden} />
