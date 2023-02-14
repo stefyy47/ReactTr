@@ -77,8 +77,7 @@ export const RecruitListContainer = () => {
     }
     fetchData()
   }, [currentPlayer, worldName])
-  if (cities?.length == 0 || currentPlayer == emptyString || worldName == emptyString)
-    return <Initializer getBuildings={getCities}></Initializer>
+  if (cities?.length == 0 || isNil(currentPlayer) || isNil(worldName)) return <Initializer getBuildings={getCities}></Initializer>
   return currentVillage != emptyObject ? (
     <>
       <RecruitFilter

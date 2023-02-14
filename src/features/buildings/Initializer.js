@@ -5,9 +5,11 @@ import { emptyString } from 'utils/constants'
 import { useCallback } from 'react'
 import { Button, Grid, TextField } from '@mui/material'
 import { usePlayerInfos } from 'hooks/usePlayerInfos'
+import { useHistory } from 'react-router-dom'
 
 export const Initializer = ({ getBuildings }) => {
   const [worldNameLocal, setWorldNameLocal] = useState(emptyString)
+  const history = useHistory()
   const { setPlayerInfo } = usePlayerInfos()
 
   const [playerId, setPlayerId] = useState(emptyString)
@@ -27,7 +29,8 @@ export const Initializer = ({ getBuildings }) => {
     if (!worldNameLocal || !playerId) return
     setPlayerInfo(playerId, worldNameLocal)
     getBuildings(playerId, worldNameLocal)
-  }, [worldNameLocal, playerId, setPlayerInfo, getBuildings])
+    history.go()
+  }, [worldNameLocal, playerId, setPlayerInfo, getBuildings, history])
   return (
     <Grid container justifyContent='center' alignItems='center' alignContent='center' direction='column' spacing={3}>
       <Grid item xs={2} md={2} lg={2}>

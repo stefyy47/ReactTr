@@ -1,6 +1,6 @@
 import useInterval from 'hooks/useInterval'
 import { usePlayerInfos } from 'hooks/usePlayerInfos'
-import { defaultTo } from 'ramda'
+import { defaultTo, isNil } from 'ramda'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useCallback } from 'react'
@@ -21,7 +21,7 @@ export const BuildingListContainer = () => {
   const [worldName] = useState(playerInfo?.worldName)
 
   const handleRemoveBuildQueue = useCallback(async () => {
-    await deleteQueueCall(currentPlayer, worldName, currentVillage?.villageId, "building")
+    await deleteQueueCall(currentPlayer, worldName, currentVillage?.villageId, 'building')
   }, [currentPlayer, currentVillage?.villageId, worldName])
 
   const handleAddBuild = useCallback(
@@ -50,19 +50,17 @@ export const BuildingListContainer = () => {
     async () => {
       setBuildings(await getBuildingsCall(currentPlayer, worldName))
     },
-    currentPlayer != emptyString && worldName != emptyString && buildings?.length > 0 ? 10000 : null
+    !isNil(currentPlayer) && !isNil(worldName) && buildings?.length > 0 ? 10000 : null
   )
   useEffect(() => {
     if (currentPlayer == emptyString || worldName == emptyString) return
     async function fetchData() {
       setBuildings(await getBuildingsCall(currentPlayer, worldName))
-
     }
     fetchData()
   }, [currentPlayer, worldName])
 
-  if (buildings?.length == 0 || currentPlayer == emptyString || worldName == emptyString)
-    return <Initializer getBuildings={getBuildings}></Initializer>
+  if (buildings?.length == 0 || isNil(currentPlayer) || isNil(worldName)) return <Initializer getBuildings={getBuildings}></Initializer>
   return (
     <>
       <BuildingFilter
