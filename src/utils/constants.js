@@ -17,7 +17,7 @@ export const buildingNames = {
     '10': 'Warehouse',
     '11': 'Granary',
     '13': 'Smithy',
-    '14': 'TournamentSquare',
+    '14': 'Tournament Square',
     '15': 'MainBuilding',
     '16': 'RallyPoint',
     '17': 'Marketplace',
@@ -30,14 +30,15 @@ export const buildingNames = {
     '24': 'Townhall',
     '25': 'Residence',
     '26': 'Palace',
-    '28': 'TradeOffice',
-    '31': 'RomanCityWall',
-    '32': 'TeutonCityWall',
-    '33': 'GaulCityWall',
-    '34': 'StonemasonLodge',
-    '41': 'HorseDrinkingTrough',
-    '45': 'HiddenTreasury',
-    '46': 'HealingTent'
+    '28': 'Trade Office',
+    '31': 'Roman City Wall',
+    '32': 'Teuton City Wall',
+    '33': 'Gaul City Wall',
+    '34': 'Stonemason Lodge',
+    '41': 'Horse Drinking Trough',
+    '42': 'Water Ditch'
+    '45': 'Hidden Treasury',
+    '46': 'Healing Tent'
 }
 
 export const buildingTypes = {
