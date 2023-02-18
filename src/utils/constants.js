@@ -36,7 +36,7 @@ export const buildingNames = {
     '33': 'Gaul City Wall',
     '34': 'Stonemason Lodge',
     '41': 'Horse Drinking Trough',
-    '42': 'Water Ditch'
+    '42': 'Water Ditch',
     '45': 'Hidden Treasury',
     '46': 'Healing Tent'
 }
