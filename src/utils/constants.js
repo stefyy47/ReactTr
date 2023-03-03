@@ -4,6 +4,7 @@ export const emptyObject = {}
 export const emptyString = ''
 export const emptyFunction = () => {}
 export const rowsPerPageOptions = [5, 10, 20, 100]
+export const resourcesLevels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 export const buildingNames = {
     '1': 'Woodcutter',
     '2': 'ClayPit',
@@ -40,6 +41,43 @@ export const buildingNames = {
     '45': 'Hidden Treasury',
     '46': 'Healing Tent'
 }
+
+export const buildingIds = {
+    'Woodcutter': '1',
+    'ClayPit': '2',
+    'IronMine': '3',
+    'Cropland': '4',
+    'Sawmill': '5',
+    'Brickyard': '6',
+    'IronFoundry': '7',
+    'GrainMill': '8',
+    'Bakery': '9',
+    'Warehouse': '10',
+    'Granary': '11',
+    'Smithy': '13',
+    'Tournament Square': '14',
+    'MainBuilding': '15',
+    'RallyPoint': '16',
+    'Marketplace': '17',
+    'Embassy': '18',
+    'Barracks': '19',
+    'Stable': '20',
+    'Workshop': '21',
+    'Academy': '22',
+    'Cranny': '23',
+    'Townhall': '24',
+    'Residence': '25',
+    'Palace': '26',
+    'Trade Office': '28',
+    'Roman City Wall': '31',
+    'Teuton City Wall': '32',
+    'Gaul City Wall': '33',
+    'Stonemason Lodge': '34',
+    'Horse Drinking Trough': '41',
+    'Water Ditch': '42',
+    'Hidden Treasury': '45',
+    'Healing Tent': '46'
+};
 
 export const buildingTypes = {
     'All': '0',
