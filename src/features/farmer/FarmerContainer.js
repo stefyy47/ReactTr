@@ -24,9 +24,12 @@ export const FarmerContainer = () => {
     async (villageId, tribe, troops, x_coord, y_coord) => {
       setLoading(true)
       await addFarmCall(currentPlayer, worldName, villageId, tribe, troops, x_coord, y_coord)
+      let tempPossibleFarms = { ...possibleFarms }
+      delete tempPossibleFarms[villageId]
+      setPossibleFarms(tempPossibleFarms)
       setLoading(false)
     },
-    [currentPlayer, worldName]
+    [currentPlayer, possibleFarms, worldName]
   )
 
   const getCities = useCallback(async (playerId, worldName) => {
