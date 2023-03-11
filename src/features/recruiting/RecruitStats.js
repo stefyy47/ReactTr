@@ -43,18 +43,18 @@ export const RecruitStats = ({ handleAddRecruits, handleClearQueue, occupiedBuil
     ]
   } else if (tribeId == tribes.Gauls) {
     barracksOptions = [
-      { id: '1', name: 'Phalanx' },
-      { id: '2', name: 'Swordsman' }
+      { id: '21', name: 'Phalanx' },
+      { id: '22', name: 'Swordsman' }
     ]
     stableOptions = [
-      { id: '3', name: 'Pathfinder' },
-      { id: '4', name: 'Theutates Thunder' },
-      { id: '5', name: 'Druidrider' },
-      { id: '6', name: 'Haeduan' }
+      { id: '23', name: 'Pathfinder' },
+      { id: '24', name: 'Theutates Thunder' },
+      { id: '25', name: 'Druidrider' },
+      { id: '26', name: 'Haeduan' }
     ]
     workshopOptions = [
-      { id: '7', name: 'Ram' },
-      { id: '8', name: 'Trebuchet' }
+      { id: '27', name: 'Ram' },
+      { id: '28', name: 'Trebuchet' }
     ]
   }
 
