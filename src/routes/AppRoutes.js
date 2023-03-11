@@ -10,12 +10,14 @@ import Dashboard from 'features/dashboard/Dashboard'
 import { MyProfile } from 'features/myProfile/myProfile'
 import { BuildingListContainer } from 'features/buildings/BuildingListContainer'
 import { RecruitListContainer } from 'features/recruiting/RecruitListContainer'
+import { SpierContainer } from 'features/spier/SpierContainer'
 
 export default function AppRoutes() {
   return (
     <Switch>
       <CustomRoute isPrivate={false} exact path='/buildings' component={BuildingListContainer} />
       <CustomRoute isPrivate={false} exact path='/recruit' component={RecruitListContainer} />
+      <CustomRoute isPrivate={false} exact path='/spy' component={SpierContainer} />
       <CustomRoute isPrivate={false} exact path='/dashboard' component={Dashboard} />
       {/* <Redirect exact from='/' to='/login' /> */}
       <CustomRoute isPrivate={false} exact path='/forbidden' component={Forbidden} />

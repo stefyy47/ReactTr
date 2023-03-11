@@ -25,24 +25,24 @@ export const Initializer = ({ getBuildings }) => {
     },
     [setPlayerId]
   )
-  const handleGetBuildings = useCallback(() => {
+  const handleGetBuildings = useCallback(async () => {
     if (!worldNameLocal || !playerId) return
-    setPlayerInfo(playerId, worldNameLocal)
-    getBuildings(playerId, worldNameLocal)
+    await setPlayerInfo(playerId, worldNameLocal)
+    await getBuildings(playerId, worldNameLocal)
     history.go()
   }, [worldNameLocal, playerId, setPlayerInfo, getBuildings, history])
 
   const handleEnterPressed = useCallback(
-    event => {
+    async event => {
       if (event.keyCode === 13) {
-        handleGetBuildings()
+        await handleGetBuildings()
       }
     },
-    []
+    [handleGetBuildings]
   )
 
   return (
-    <Grid container justifyContent='center' alignItems='center' alignContent='center' direction='column' spacing={3}>
+    <Grid container justifyContent='center' alignItems='center' alignContent='center' direction='column' spacing={3} onKeyDown={handleEnterPressed}>
       <Grid item xs={2} md={2} lg={2}>
         <TextField label={'World Name'} fullWidth value={worldNameLocal} onChange={handleWorldNameChanged}></TextField>
       </Grid>

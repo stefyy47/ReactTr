@@ -1,4 +1,3 @@
-import useInterval from 'hooks/useInterval'
 import { usePlayerInfos } from 'hooks/usePlayerInfos'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
