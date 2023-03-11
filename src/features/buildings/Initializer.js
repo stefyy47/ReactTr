@@ -31,6 +31,16 @@ export const Initializer = ({ getBuildings }) => {
     getBuildings(playerId, worldNameLocal)
     history.go()
   }, [worldNameLocal, playerId, setPlayerInfo, getBuildings, history])
+
+  const handleEnterPressed = useCallback(
+    event => {
+      if (event.keyCode === 13) {
+        handleGetBuildings()
+      }
+    },
+    []
+  )
+
   return (
     <Grid container justifyContent='center' alignItems='center' alignContent='center' direction='column' spacing={3}>
       <Grid item xs={2} md={2} lg={2}>

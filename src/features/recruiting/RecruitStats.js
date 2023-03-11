@@ -28,18 +28,18 @@ export const RecruitStats = ({ handleAddRecruits, handleClearQueue, occupiedBuil
     ]
   } else if (tribeId == tribes.Teutons) {
     barracksOptions = [
-      { id: '1', name: 'Clubswinger' },
-      { id: '2', name: 'Spearfighter' },
-      { id: '3', name: 'Axefighter' },
-      { id: '4', name: 'Scout' }
+      { id: '11', name: 'Clubswinger' },
+      { id: '12', name: 'Spearfighter' },
+      { id: '13', name: 'Axefighter' },
+      { id: '14', name: 'Scout' }
     ]
     stableOptions = [
-      { id: '5', name: 'Paladin' },
-      { id: '6', name: 'Teutonic Knight' }
+      { id: '15', name: 'Paladin' },
+      { id: '16', name: 'Teutonic Knight' }
     ]
     workshopOptions = [
-      { id: '7', name: 'Ram' },
-      { id: '8', name: 'Catapult' }
+      { id: '17', name: 'Ram' },
+      { id: '18', name: 'Catapult' }
     ]
   } else if (tribeId == tribes.Gauls) {
     barracksOptions = [
