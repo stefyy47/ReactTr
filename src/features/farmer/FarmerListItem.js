@@ -19,7 +19,7 @@ export const FarmerListItem = ({ farm, villageId, handleAddVillageToFarmList }) 
   }, [farm?.coordinates?.x_coord, farm?.coordinates?.y_coord, farm?.tribe, handleAddVillageToFarmList, troopsToSend, villageId])
 
   const changeTroops = useCallback(e => {
-    setTroopsToSend(e.target.value)
+    setTroopsToSend(parseInt(e.target.value))
   }, [])
 
   return (
