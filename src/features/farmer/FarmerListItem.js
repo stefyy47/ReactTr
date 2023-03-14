@@ -5,18 +5,22 @@ import { makeStyles } from '@material-ui/core'
 import getTheme from 'utils/theme'
 import buildingStyle from 'features/buildings/styles/styles'
 import { IconButton } from '@totalsoft_oss/rocket-ui.core'
-import { Add } from '@mui/icons-material'
+import { Add, Remove } from '@mui/icons-material'
 import { TextField } from '@mui/material'
 
 const useStyles = makeStyles(buildingStyle(getTheme()))
 
-export const FarmerListItem = ({ farm, villageId, handleAddVillageToFarmList }) => {
+export const FarmerListItem = ({ farm, villageId, handleAddVillageToFarmList, onRemovePossibleFarm }) => {
   const { tableContent } = useStyles()
   const [troopsToSend, setTroopsToSend] = useState(0)
 
   const onAddVillageToFarmList = useCallback(async () => {
     await handleAddVillageToFarmList(villageId, farm?.tribe, troopsToSend, farm?.coordinates?.x_coord, farm?.coordinates?.y_coord)
   }, [farm?.coordinates?.x_coord, farm?.coordinates?.y_coord, farm?.tribe, handleAddVillageToFarmList, troopsToSend, villageId])
+
+  const handleRemovePossibleFarm = useCallback(async () => {
+    await onRemovePossibleFarm(villageId)
+  }, [onRemovePossibleFarm, villageId])
 
   const changeTroops = useCallback(e => {
     setTroopsToSend(parseInt(e.target.value))
@@ -25,6 +29,7 @@ export const FarmerListItem = ({ farm, villageId, handleAddVillageToFarmList }) 
   return (
     <>
       <Tr>
+        <Td className={tableContent}>{<h5>{new Date(farm?.parsed_time * 1000).toLocaleDateString('ro-RO')}</h5>}</Td>
         <Td className={tableContent}>{<h5>{farm?.tribe}</h5>}</Td>
         <Td className={tableContent}>
           <h5>{farm?.troops}</h5>
@@ -50,12 +55,21 @@ export const FarmerListItem = ({ farm, villageId, handleAddVillageToFarmList }) 
         <Td className={tableContent}>
           <IconButton
             title='Add in farm list'
-            color={'successNoBackground'}
+            color={'success'}
             size={'small'}
             onClick={onAddVillageToFarmList}
             fontSize={'small'}
           >
             <Add size={'small'} />
+          </IconButton>
+          <IconButton
+            title='Remove from possible farms'
+            color={'danger'}
+            size={'small'}
+            onClick={handleRemovePossibleFarm}
+            fontSize={'small'}
+          >
+            <Remove size={'small'} />
           </IconButton>
         </Td>
       </Tr>
@@ -66,5 +80,6 @@ export const FarmerListItem = ({ farm, villageId, handleAddVillageToFarmList }) 
 FarmerListItem.propTypes = {
   farm: PropTypes.object,
   villageId: PropTypes.string,
-  handleAddVillageToFarmList: PropTypes.func
+  handleAddVillageToFarmList: PropTypes.func,
+  onRemovePossibleFarm: PropTypes.func
 }
